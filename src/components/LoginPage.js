@@ -13,7 +13,7 @@ class LoginPage extends React.Component {
       username: "",
       password: "",
       shouldAlertDisplay: false,
-      shouldLoginErrorDisplay:false
+      shouldLoginErrorDisplay: false,
     };
   }
 
@@ -37,40 +37,47 @@ class LoginPage extends React.Component {
     this.setState({ shouldAlertDisplay: false });
     this.setState({ shouldLoginErrorDisplay: false });
 
-    if(username === "admin" && password === "admin") {
-      push({
-        pathname: "/admin",
-      });
-      return;
-
-    }
-    const reqJson={
-      userName:username,password:password
-    }
-    axios.post(url,reqJson).then((res) => {
-     if(res.data.isValidUser)
-     {
-       localStorage.setItem("userId",parseInt(res.data.userId));
-       localStorage.setItem("userRole",res.data.userRole);
-      push({
-        pathname: "/home",
-        // userId: res.data.userId,
-        // userRole:res.data.userRole
-      });
-     }
-     if(!res.data.isValidUser){
-       this.setState({shouldLoginErrorDisplay: true})
-     }
+    const reqJson = {
+      userName: username,
+      password: password,
+    };
+    axios.post(url, reqJson).then((res) => {
+      if (res.data.isValidUser) {
+        localStorage.setItem("userId", parseInt(res.data.userId));
+        localStorage.setItem("userRole", res.data.userRole);
+        push({
+          pathname: "/home",
+          // userId: res.data.userId,
+          // userRole:res.data.userRole
+        });
+      }
+      if (!res.data.isValidUser) {
+        this.setState({ shouldLoginErrorDisplay: true });
+      }
     });
   };
 
   render() {
-    const { username, password, shouldAlertDisplay,shouldLoginErrorDisplay } = this.state;
+    const { username, password, shouldAlertDisplay, shouldLoginErrorDisplay } =
+      this.state;
     return (
-      <div className="flex flex-col space-y-5 max-w-md mx-auto my-16 min-w-500"  style={{backgroundColor:'aliceblue',padding:'30px',borderRadius:10}}>
-        <div style={{color:'cornflowerblue',display:'flex',justifyContent:'center'}} className="flex items-center justify-between">
-          <h2   className="text-4xl font-semibold  uppercase">Login</h2>
-          
+      <div
+        className="flex flex-col space-y-5 max-w-md mx-auto my-16 min-w-500"
+        style={{
+          backgroundColor: "aliceblue",
+          padding: "30px",
+          borderRadius: 10,
+        }}
+      >
+        <div
+          style={{
+            color: "cornflowerblue",
+            display: "flex",
+            justifyContent: "center",
+          }}
+          className="flex items-center justify-between"
+        >
+          <h2 className="text-4xl font-semibold  uppercase">Login</h2>
         </div>
         <TextField
           value={username}
@@ -88,15 +95,22 @@ class LoginPage extends React.Component {
           onChange={(e) => this.handlePasswordChange(e)}
         />
         <div className="flex">
-            <p className="text-lg">New User?</p>
-            <Link
-              to="/signup"
-              style={{color:'cornflowerblue'}}  className=" font-semibold text-lg px-1"
-            >
-              Sign up
-            </Link>
-          </div>
-          <button type="button" class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 " onClick={this.handleLogin}>Login</button>
+          <p className="text-lg">New User?</p>
+          <Link
+            to="/signup"
+            style={{ color: "cornflowerblue" }}
+            className=" font-semibold text-lg px-1"
+          >
+            Sign up
+          </Link>
+        </div>
+        <button
+          type="button"
+          class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 "
+          onClick={this.handleLogin}
+        >
+          Login
+        </button>
         {shouldAlertDisplay && (
           <Alert severity="error">Field cannot be empty</Alert>
         )}

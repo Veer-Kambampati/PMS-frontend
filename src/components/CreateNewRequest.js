@@ -8,10 +8,9 @@ class CreateNewRequest extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      enableEdit:false
+      enableEdit: false,
     };
   }
-
 
   handleLogout = () => {
     localStorage.removeItem("username");
@@ -21,20 +20,27 @@ class CreateNewRequest extends React.Component {
     push("/");
   };
 
-  enableEdit = () =>{
-    this.setState({enableEdit:true});
-  }
+  enableEdit = () => {
+    this.setState({ enableEdit: true });
+  };
 
   render() {
     return (
-
-<div className=" flex min-h-screen" style={{backgroundColor:'darkSlateBlue'}}>
-      <Sidebar handleNewRequest={this.handleNewRequest} handleLogout={this.handleLogout}/>
-      <div className="flex flex-col relative w-full" style={{marginTop:'80px',marginLeft:'200px'}}>
-          <ProjectCard isEnableEdit={true} isNew/>
+      <div
+        className=" flex min-h-screen"
+        style={{ backgroundColor: "darkSlateBlue" }}
+      >
+        <Sidebar
+          handleNewRequest={this.handleNewRequest}
+          handleLogout={this.handleLogout}
+        />
+        <div
+          className="flex flex-col relative w-full"
+          style={{ marginTop: "80px", marginLeft: "200px" }}
+        >
+          <ProjectCard isEnableEdit={true} isNew />
         </div>
-  </div>
-
+      </div>
     );
   }
 }

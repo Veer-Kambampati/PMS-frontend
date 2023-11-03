@@ -1,36 +1,35 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-html{
-    background: darkslateblue;
+html {
+  background: darkslateblue;
 }
 
 #status {
-    /* background: linear-gradient(90deg, rgb(81, 180, 151) 0%, rgb(50, 181, 175) 35%, rgb(1, 173, 209) 100%); */
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+  /* background: linear-gradient(90deg, rgb(81, 180, 151) 0%, rgb(50, 181, 175) 35%, rgb(1, 173, 209) 100%); */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-#card_desc{
-    height: 100px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 4;
-    -webkit-box-orient: vertical;
+#card_desc {
+  height: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
 }
 
-#button_color{
-   background-color: lightblue;
+#button_color {
+  background-color: lightblue;
 }
 
-#projectDetailsText{
-    color: white;
-    font-size: 18px;
-    font-weight: 400;
-    display: flex;
-    align-items: center;
-    min-width: 200px;
+#projectDetailsText {
+  color: white;
+  font-size: 18px;
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  min-width: 200px;
 }

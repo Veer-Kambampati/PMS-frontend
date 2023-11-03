@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 import React from "react";
 import Alert from "@mui/material/Alert";
 import { withRouter } from "react-router";
@@ -18,17 +18,15 @@ class Signup extends React.Component {
     this.state = {
       username: "",
       email: "",
-      phoneNumber:"",
+      phoneNumber: "",
       password: "",
-      address:"",
-      role:'Requestor',
+      address: "",
+      role: "Requestor",
       shouldAlertDisplay: false,
       shouldErrorMessageDisplay: false,
-      signupErrorMessage:"",
-      isEmailError:false,
-      isNumberError:false,
-
-
+      signupErrorMessage: "",
+      isEmailError: false,
+      isNumberError: false,
     };
   }
 
@@ -57,75 +55,101 @@ class Signup extends React.Component {
   };
 
   handleSubmit = () => {
-    const { username, email, password,role,phoneNumber } = this.state;
+    const { username, email, password, role, phoneNumber } = this.state;
     const {
       history: { push },
     } = this.props;
     if (
       username === "" ||
       email === "" ||
-      password === "" || role=== "" || phoneNumber==="" 
+      password === "" ||
+      role === "" ||
+      phoneNumber === ""
     ) {
       this.setState({ shouldAlertDisplay: true });
       return;
     }
     const isEmailError = this.checkEmailError(email);
     const isPhoneError = this.checkPhoneError(phoneNumber);
-    if(!isEmailError){
-      this.setState({isEmailError: true});
-    }else{
-      this.setState({isEmailError: false});
+    if (!isEmailError) {
+      this.setState({ isEmailError: true });
+    } else {
+      this.setState({ isEmailError: false });
     }
-    if(!isPhoneError){
-      this.setState({isNumberError: true});
-    }else{
-      this.setState({isNumberError: false});
+    if (!isPhoneError) {
+      this.setState({ isNumberError: true });
+    } else {
+      this.setState({ isNumberError: false });
     }
 
-    if(!isEmailError){
+    if (!isEmailError) {
       return;
     }
 
-    const reqJson={
-     userName:username,
-     password:password,
-     email:email,
-     phoneNumber:phoneNumber,
-     userRole: role
-    }
-   
-    axios.post(eventBaseUrl,reqJson).then((res) => {
-      if(!res.data.isRegisterSuccessfull){
-       this.setState({
-        signupErrorMessage:res.data.error,
-        shouldErrorMessageDisplay:true
-       }) 
-      }else{
-        push('/');
-       }
+    const reqJson = {
+      userName: username,
+      password: password,
+      email: email,
+      phoneNumber: phoneNumber,
+      userRole: role,
+    };
+
+    axios.post(eventBaseUrl, reqJson).then((res) => {
+      if (!res.data.isRegisterSuccessfull) {
+        this.setState({
+          signupErrorMessage: res.data.error,
+          shouldErrorMessageDisplay: true,
+        });
+      } else {
+        push("/");
+      }
     });
   };
 
-  checkEmailError =(email) =>{
-    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  checkEmailError = (email) => {
+    const re =
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(String(email).toLowerCase());
-  }
+  };
 
-  checkPhoneError =(number) =>{
+  checkPhoneError = (number) => {
     const re = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
     return re.test(String(number).toLowerCase());
-  }
-
- 
-
+  };
 
   render() {
-    const { username,phoneNumber, email, password, shouldAlertDisplay,shouldErrorMessageDisplay,signupErrorMessage, isEmailError,isNumberError,role} =
-      this.state;
-      
+    const {
+      username,
+      phoneNumber,
+      email,
+      password,
+      shouldAlertDisplay,
+      shouldErrorMessageDisplay,
+      signupErrorMessage,
+      isEmailError,
+      isNumberError,
+      role,
+    } = this.state;
+
     return (
-      <div className="flex flex-col space-y-5 max-w-md mx-auto my-16 min-w-500" style={{backgroundColor:'aliceblue',padding:'30px',borderRadius:10}}>
-        <h2 style={{color:'cornflowerblue',display:'flex',justifyContent:'center'}} className="text-4xl font-semibold uppercase">Signup</h2>
+      <div
+        className="flex flex-col space-y-5 max-w-md mx-auto my-16 min-w-500"
+        style={{
+          backgroundColor: "aliceblue",
+          padding: "30px",
+          borderRadius: 10,
+        }}
+      >
+        <h2
+          style={{
+            color: "cornflowerblue",
+            display: "flex",
+            justifyContent: "center",
+          }}
+          className="text-4xl font-semibold uppercase"
+        >
+          Signup
+        </h2>
         <TextField
           required
           id="outlined-username"
@@ -149,7 +173,7 @@ class Signup extends React.Component {
           value={email}
           label="Email"
           onChange={(e) => this.handleEmailChange(e)}
-          helperText={isEmailError ?"Invalid Email":''}
+          helperText={isEmailError ? "Invalid Email" : ""}
         />
         <TextField
           error={isNumberError}
@@ -158,40 +182,49 @@ class Signup extends React.Component {
           value={phoneNumber}
           label="Phone Number"
           onChange={(e) => this.handlePhoneNumberChange(e)}
-          helperText={isNumberError?"Invalid Phone Number":''}
+          helperText={isNumberError ? "Invalid Phone Number" : ""}
         />
 
-  <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">Role</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={role}
-          label="Role"
-          onChange={e=>this.handleRoleChange(e)}
-        >
-          <MenuItem value={'Requestor'}>Requestor</MenuItem>
-          <MenuItem value={'Approver'}>Approver</MenuItem>
-        </Select>
-      </FormControl>
-        
+        <FormControl fullWidth>
+          <InputLabel id="demo-simple-select-label">Role</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={role}
+            label="Role"
+            onChange={(e) => this.handleRoleChange(e)}
+          >
+            <MenuItem value={"Requestor"}>Requestor</MenuItem>
+            <MenuItem value={"Approver"}>Approver</MenuItem>
+          </Select>
+        </FormControl>
+
         <div className="flex items-center justify-between">
-        <button type="button" class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 " onClick={this.handleSubmit}>Submit</button>
- 
+          <button
+            type="button"
+            class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 "
+            onClick={this.handleSubmit}
+          >
+            Submit
+          </button>
+
           <div className="flex">
             <p className="text-lg">Existing User?</p>
-            <Link to="/" style={{color:'cornflowerblue'}} className="font-semibold text-lg px-1">
+            <Link
+              to="/"
+              style={{ color: "cornflowerblue" }}
+              className="font-semibold text-lg px-1"
+            >
               Login
             </Link>
           </div>
         </div>
-        {shouldAlertDisplay &&
+        {shouldAlertDisplay && (
           <Alert severity="error">Field cannot be empty</Alert>
-        }
-         {shouldErrorMessageDisplay &&
+        )}
+        {shouldErrorMessageDisplay && (
           <Alert severity="error"> {signupErrorMessage} </Alert>
-        }
-        
+        )}
       </div>
     );
   }
